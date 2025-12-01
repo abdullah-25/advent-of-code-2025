@@ -16,26 +16,24 @@ def secret_password(safe_input):
     curr = 50
 
     if not safe_input:
-        return 
-    
+        return
+
     for line in safe_input:
         first_letter = line[0]
         number = int(line[1:])
         if first_letter == 'L':
-            curr = curr - number
-            print(f"curr in L {curr}")
-            while curr < 0:
-                curr = curr + 100
-                print(f"curr in L while block {curr}")
+            for i in range(number):
+                curr = curr - 1
+                if curr < 0:
+                    curr = curr + 100
+                if curr == 0:
+                    password += 1
         elif first_letter == 'R':
-            curr = curr + number
-            print(f"curr in R {curr}")
-            while curr > 99:
-                curr = curr - 100
-                print(f"curr in R while block {curr}")
-        if curr == 0:
-            password += 1
-            print(f"password getting added {password}")
+            for i in range(number):
+                curr += 1
+                if curr == 100:
+                    curr = 0
+                    password += 1
     return password
 
 
