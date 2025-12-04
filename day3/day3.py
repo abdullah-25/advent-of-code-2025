@@ -22,9 +22,23 @@ def max_joltage(banks):
     return sum
 
 
+def max_joltage_part2(banks):
+    ans = 0
+
+    for bank in banks:
+        str_builder = ''
+        while len(str_builder) != 12:
+            w = len(bank) - (11 - len(str_builder))
+            str_builder += (max(bank[:w]))
+            bank = bank[bank.index(max(bank[:w]))+1:]
+        ans += int(str_builder)
+    return ans
+
+
 if __name__ == '__main__':
     banks = []
     with open('test.txt', 'r', encoding='UTF8') as f:
         for line in f:
             banks.append(line.strip())
-    print(max_joltage(banks))
+
+    print(max_joltage_part2(banks))
