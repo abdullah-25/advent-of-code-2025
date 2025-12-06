@@ -14,6 +14,7 @@ def forklift_roll_count(line_of_roles):
     """
     print_roll = '@'
     sum = 0
+    pos_for_x = []
     neighbor_offsets = [
         (-1, -1), (-1, 0), (-1, 1),  # Top row
         (0, -1),          (0, 1),   # Middle row
@@ -35,11 +36,61 @@ def forklift_roll_count(line_of_roles):
                     neighbour_val = line_of_roles[nr][nc]
                     if neighbour_val == print_roll:
                         local_count += 1
+                        # mark it as x
+
+                        # recursively call forklift_roll_count(new_state)
 
             # after check is complete
             if local_count < 4:
                 sum += 1
     return sum
+
+
+def forklift_roll_count_part_2(grid):
+    neighbor_offsets = [
+        (-1, -1), (-1, 0), (-1, 1),  # Top row
+        (0, -1),          (0, 1),   # Middle row
+        (1, -1),  (1, 0),  (1, 1)    # Bottom row
+    ]
+    print_roll = '@'
+    rolls_to_mark = []
+    total_removed_count = 0
+    grid = [list(row) for row in grid]
+
+    changed = True
+    while changed:
+        changed = False
+        rolls_to_mark = []
+
+        for row in range(len(grid)):
+            for col in range(len(grid[0])):
+
+                if grid[row][col] != print_roll:
+                    continue
+
+                local_count = 0
+                for off_row, off_col in neighbor_offsets:
+                    nr, nc = row + off_row, col + off_col
+
+                    if 0 <= nr < len(grid) and 0 <= nc < len(grid[0]):
+                        neighbour_val = grid[nr][nc]
+                        if neighbour_val == print_roll:
+                            local_count += 1
+
+                if local_count < 4:
+                    rolls_to_mark.append((row, col))
+
+        if rolls_to_mark:
+            changed = True
+            print(rolls_to_mark)
+
+            for x, y in rolls_to_mark:
+                grid[x][y] = 'X'
+                total_removed_count += 1
+
+    return total_removed_count
+
+
 
 
 if __name__ == '__main__':
@@ -48,4 +99,5 @@ if __name__ == '__main__':
         for line in f:
             line_of_rolls.append(line.strip())
 
-        print(forklift_roll_count(line_of_rolls))
+        # print(forklift_roll_count(line_of_rolls))
+        print(forklift_roll_count_part_2(line_of_rolls))
