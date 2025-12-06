@@ -54,6 +54,7 @@ def forklift_roll_count_part_2(grid):
     print_roll = '@'
     rolls_to_mark = []
     total_removed_count = 0
+    # convert each char to list so it can be reasigned with 'X'
     grid = [list(row) for row in grid]
 
     changed = True
