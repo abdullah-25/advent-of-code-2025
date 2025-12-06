@@ -14,7 +14,6 @@ def forklift_roll_count(line_of_roles):
     """
     print_roll = '@'
     sum = 0
-    pos_for_x = []
     neighbor_offsets = [
         (-1, -1), (-1, 0), (-1, 1),  # Top row
         (0, -1),          (0, 1),   # Middle row
@@ -82,7 +81,6 @@ def forklift_roll_count_part_2(grid):
 
         if rolls_to_mark:
             changed = True
-            print(rolls_to_mark)
 
             for x, y in rolls_to_mark:
                 grid[x][y] = 'X'
